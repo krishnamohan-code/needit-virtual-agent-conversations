@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_topic_language">
+    <sys_cb_topic_language action="INSERT_OR_UPDATE">
+        <cb_topic_id display_value="Update NeedIt Records">ff6b064a933ab11003ebf0aefaba1002</cb_topic_id>
+        <language_code>en</language_code>
+        <nlu_entities>[{"node_id":"2fed33a013134c6683e40a3a2948c3b6","variable_name":"needit_type","nlu_entity":"case","nlu_entity_label":"case"},{"node_id":"733828ff627e42ccb9885d0a1cdb77dc","variable_name":"needit_list","nlu_entity":"","nlu_entity_label":""},{"node_id":"590f0ec3f70042c2a510a29ee934508e","variable_name":"search_again","nlu_entity":"","nlu_entity_label":""},{"node_id":"3f1f633c0eb044359bdcb05337e682f9","variable_name":"new_when_needed_date","nlu_entity":"","nlu_entity_label":""},{"node_id":"180182c35b124db0a43fb344b338c9c3","variable_name":"want_to_update","nlu_entity":"case","nlu_entity_label":"case"},{"node_id":"f6cb740aaf274aa7a7a21e138d20d280","variable_name":"new_short_description","nlu_entity":"","nlu_entity_label":""}]</nlu_entities>
+        <nlu_intent>CheckCaseStatus</nlu_intent>
+        <nlu_intent_label>CheckCaseStatus</nlu_intent_label>
+        <nlu_model>sn_csm_nlu_Customer_Service_NLU_Model</nlu_model>
+        <nlu_model_label>Customer Service NLU for VA</nlu_model_label>
+        <nlu_provider>64c023c17300330021a044764df6a70e</nlu_provider>
+        <sys_class_name>sys_cb_topic_language</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-01 12:50:08</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>fb83a21e937ef11003ebf0aefaba102b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name/>
+        <sys_package display_value="NeedIt Virtual Agent Conversations" source="x_742101_needit_vi">d3e8c206933ab11003ebf0aefaba1090</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt Virtual Agent Conversations">d3e8c206933ab11003ebf0aefaba1090</sys_scope>
+        <sys_update_name>sys_cb_topic_language_fb83a21e937ef11003ebf0aefaba102b</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-12-04 10:00:10</sys_updated_on>
+    </sys_cb_topic_language>
+</record_update>

@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_design_topic">
+    <sys_cb_design_topic action="INSERT_OR_UPDATE">
+        <compiled_topic display_value="_PRVW__fcf6ed17963a3110fc2422879a53ba54">34f66597933a311003ebf0aefaba1052</compiled_topic>
+        <design_definition>{"type":"FlowTopic","triggers":[{"type":"Trigger","name":"e56a47d4d4774df897b9e545e5d8060b","triggerType":"request","applicability":{"type":"Applicability","mode":"script","value":"true"},"id":"e56a47d4d4774df897b9e545e5d8060b"}],"goals":[{"name":"primary","trigger_id":"e56a47d4d4774df897b9e545e5d8060b","nodes":[{"type":"StartGoal","goal_id":"primary","greeting_msg":{"type":"String","mode":"string","value":"gs.getMessageLang(\"I can help you find and update NeedIt records for a type of request\", vaContext.getRequesterLang())"},"id":"b3f5d0b5502c49b088cb732aac658404","name":"Start"},{"type":"TerminateGoal","goal_id":"primary","confirmation_msg":{"type":"String","mode":"string","value":"gs.getMessageLang(\"Ask again when you need to update other NeedIt records.\", vaContext.getRequesterLang())"},"id":"e4107c2984704b0aba947ec633366ecb","name":"End"},{"type":"ChoiceInputPrompt","expression_mode":"simple","metadataScript":"","cardName":"","cardFields":[],"id":"78d83ca876314fc189eb6fba451ee3e7","name":"NeedIt Type","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"variable_id":"2c2647bf6ee84f669c3d41ba7a001b37","message":{"type":"String","mode":"string","value":"gs.getMessageLang(\"Which type of NeedIt record would you like to view?\", vaContext.getRequesterLang())"},"skippable":{"type":"Applicability","mode":"script","value":"false"},"skipreprompt":{"type":"Applicability","mode":"script","value":"false"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"description":""},{"type":"TextOutputPrompt","value":[{"type":"String","mode":"script","value":"(function execute() {\n    /* Return a quoted string.  For example:\n\n       if (vaInputs.first_name == 'Bill') {\n           return gs.getMessageLang(\"hi there {0}\", vaContext.getRequesterLang(), [vaInputs.first_name]);\n       } else {\n           return gs.getMessageLang(\"how are you {0}\", vaContext.getRequesterLang(), [vaInputs.last_name]);\n       }\n    */\n    return 'You selected: '+vaInputs.needit_type.getDisplayValue();\n})()\n"}],"id":"fda937469e514a0c82b4ad8bdfd37d6a","name":"Confirm NeedIt Type","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"secure":false},{"type":"ReferenceChoiceInputPrompt","mode":"external","id":"98c29ed85df0475aa5daceb50452d779","name":"NeedIt List","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"variable_id":"f14c4f36bbac4c37a6127f782c136f75","message":{"type":"String","mode":"string","value":"gs.getMessageLang(\"Select a NeedIt record to view.\", vaContext.getRequesterLang())"},"skippable":{"type":"Applicability","mode":"script","value":"false"},"skipreprompt":{"type":"Applicability","mode":"script","value":"false"},"nlu_entity_binding":{"type":"NLUEntityBinding","allow_text_input":false,"use_confirmation_prompt":true},"expression_mode":"script","script":"(function execute(table) {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n\n    var options = []; // add options here...\n    var grNI = new GlideRecord(table);\n    grNI.addQuery('u_request_type',vaInputs.needit_type.getValue());\n    gs.info('u_request_type '+vaInputs.needit_type.getValue()+\" table \"+table);\n    grNI.addQuery('active','true');\n   //grNI.addQuery('u_requested_for',vaInputs.user);\n    grNI.orderBy('u_when_needed');\n    grNI.query();\n    while(grNI.next()){\n      options.push({'value': grNI.getUniqueValue(), 'label': grNI.getValue('number')+\n      \"(\"+grNI.getValue('u_when_needed')+\"): \"+grNI.getValue('short_description')});\n    }\n    return options;\n})()\n","metadataScript":"","cardName":"","cardFields":[],"no_options_found_message":{"type":"String","mode":"string","value":"gs.getMessageLang(\"You have no open NeedIt records\", vaContext.getRequesterLang())"},"condition":{"type":"Condition","mode":"external_script","value":"(function execute(table) {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n\n    var options = []; // add options here...\n    var grNI = new GlideRecord(table);\n    grNI.addQuery('u_request_type',vaInputs.needit_type.getValue());\n    gs.info('u_request_type '+vaInputs.needit_type.getValue()+\" table \"+table);\n    grNI.addQuery('active','true');\n   //grNI.addQuery('u_requested_for',vaInputs.user);\n    grNI.orderBy('u_when_needed');\n    grNI.query();\n    while(grNI.next()){\n      options.push({'value': grNI.getUniqueValue(), 'label': grNI.getValue('number')+\n      \"(\"+grNI.getValue('u_when_needed')+\"): \"+grNI.getValue('short_description')});\n    }\n    return options;\n})()\n"},"description":""}],"edges":[{"type":"Edge","source_node_id":"98c29ed85df0475aa5daceb50452d779","target_node_id":"e4107c2984704b0aba947ec633366ecb","id":"5bf320f47de3490f9469b31d606a51a0"},{"type":"Edge","source_node_id":"b3f5d0b5502c49b088cb732aac658404","target_node_id":"78d83ca876314fc189eb6fba451ee3e7","id":"03abfdd64f0f49b9877acc8bf154bc21"},{"type":"Edge","source_node_id":"78d83ca876314fc189eb6fba451ee3e7","target_node_id":"fda937469e514a0c82b4ad8bdfd37d6a","id":"bc8b2a7dddf2400fb923b8943177bc90"},{"type":"Edge","source_node_id":"fda937469e514a0c82b4ad8bdfd37d6a","target_node_id":"98c29ed85df0475aa5daceb50452d779","id":"4be59c29280549d6b3974cd172b7da5d"}],"id":"primary"}],"script_variables":[{"type":"String","name":"LiveAgent_application","value":{"type":"String","mode":"string"},"list":false,"id":"4b67f6c01ed540ba92a68fdc312b03c2","formatType":"text","secure":false,"sensitive":false}],"glide_variables":[{"type":"Reference","table":"sys_user","id":"eaec74f0864349f58f95df07c44ab1d8","name":"user","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"Choice","choices":[{"name":"Legal","element":"legal"},{"name":"Facilities","element":"facilities"},{"name":"Human Resources","element":"human resources"}],"id":"2c2647bf6ee84f669c3d41ba7a001b37","name":"needit_type","formatType":"text","secure":false,"sensitive":false,"list":false},{"type":"Choice","choices":[],"id":"f14c4f36bbac4c37a6127f782c136f75","name":"needit_list","formatType":"text","secure":false,"sensitive":false,"list":false,"table":"x_58872_needit_needit"}],"applicability":{"type":"Applicability","mode":"script","value":"true"},"roles":[],"scope":"d3e8c206933ab11003ebf0aefaba1090","domain":"global","topic_type":"STANDARD","channels":[],"dialog_acts_enabled":false,"id":"18a4a553933a311003ebf0aefaba1054","name":"_PRVW__fcf6ed17963a3110fc2422879a53ba54","key_phrases":["Update NeedIt Records (script)","Update NeedIt Records","NeedIt Request"],"nlu_provider":"","nlu_model":"","nlu_model_label":"","nlu_intent":"","nlu_intent_label":"","flexible_conversation_switching":false,"autopilot_topic":false,"design_categories":[{"name":null,"visible":false,"sysId":"12d9cec6933ab11003ebf0aefaba10b0"}],"triggerable_by_notification":false,"description":"Topic allows users to update their open NeedIt records","model_type":"nlu_keyword","modify_confirmation_enabled":false,"library":false,"readOnly":false,"nluMapping":"[]"}</design_definition>
+        <design_topic_id>18a4a553933a311003ebf0aefaba1054</design_topic_id>
+        <graph>{
+  "graph_api_version": "1.0.51",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "b3f5d0b5502c49b088cb732aac658404": {
+          "id": "b3f5d0b5502c49b088cb732aac658404",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "I can help you find and update NeedIt records for a type of request"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          }
+        },
+        "e4107c2984704b0aba947ec633366ecb": {
+          "id": "e4107c2984704b0aba947ec633366ecb",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Ask again when you need to update other NeedIt records."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          }
+        },
+        "78d83ca876314fc189eb6fba451ee3e7": {
+          "name": "NeedIt Type",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Which type of NeedIt record would you like to view?"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "2c2647bf6ee84f669c3d41ba7a001b37",
+          "detailDescription": "",
+          "id": "78d83ca876314fc189eb6fba451ee3e7",
+          "stepType": "ChoicePrompt",
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        },
+        "fda937469e514a0c82b4ad8bdfd37d6a": {
+          "id": "fda937469e514a0c82b4ad8bdfd37d6a",
+          "stepType": "TextOutput",
+          "name": "Confirm NeedIt Type",
+          "secure": false,
+          "value": [
+            {
+              "value": "(function execute() {\n    /* Return a quoted string.  For example:\n\n       if (vaInputs.first_name == 'Bill') {\n           return gs.getMessageLang(\"hi there {0}\", vaContext.getRequesterLang(), [vaInputs.first_name]);\n       } else {\n           return gs.getMessageLang(\"how are you {0}\", vaContext.getRequesterLang(), [vaInputs.last_name]);\n       }\n    */\n    return 'You selected: '+vaInputs.needit_type.getDisplayValue();\n})()\n",
+              "mode": "script"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          }
+        },
+        "98c29ed85df0475aa5daceb50452d779": {
+          "name": "NeedIt List",
+          "prompt": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "Select a NeedIt record to view."
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "confirmMessage": {
+            "value": "",
+            "mode": "simple"
+          },
+          "acknowledgeMsg": {
+            "value": "",
+            "mode": "simple"
+          },
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "skippable": {
+            "value": "",
+            "mode": "query"
+          },
+          "skipReprompt": {
+            "value": "",
+            "mode": "query"
+          },
+          "defaultValue": {
+            "value": "",
+            "mode": "simple"
+          },
+          "variableId": "f14c4f36bbac4c37a6127f782c136f75",
+          "detailDescription": "",
+          "id": "98c29ed85df0475aa5daceb50452d779",
+          "stepType": "ReferenceChoicePrompt",
+          "mode": "external",
+          "script": "(function execute(table) {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n\n    var options = []; // add options here...\n    var grNI = new GlideRecord(table);\n    grNI.addQuery('u_request_type',vaInputs.needit_type.getValue());\n    gs.info('u_request_type '+vaInputs.needit_type.getValue()+\" table \"+table);\n    grNI.addQuery('active','true');\n   //grNI.addQuery('u_requested_for',vaInputs.user);\n    grNI.orderBy('u_when_needed');\n    grNI.query();\n    while(grNI.next()){\n      options.push({'value': grNI.getUniqueValue(), 'label': grNI.getValue('number')+\n      \"(\"+grNI.getValue('u_when_needed')+\"): \"+grNI.getValue('short_description')});\n    }\n    return options;\n})()\n",
+          "metadataScript": "",
+          "cardData": {},
+          "noRecordsResponseMsg": {
+            "value": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "text": "You have no open NeedIt records"
+                  }
+                ]
+              }
+            ],
+            "mode": "simple"
+          },
+          "condition": {
+            "value": "(function execute(table) {\n    /* Code your script logic here. For example, you might want to call an external web service\n       to find the best local Italian restaurants.  Call a Restaurants Web Service then use the results\n       to populate an options array.\n\n        var options = [];\n        options.push({ 'value': 'best_italian_1', 'label': gs.getMessageLang(\"Best Italian Restaurant Ever\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        options.push({ 'value': 'best_italian_2', 'label': gs.getMessageLang(\"Even Better Italian Restaurant\", vaContext.getRequesterLang()), 'render_style': 'data' });\n        return options;\n    */\n\n    var options = []; // add options here...\n    var grNI = new GlideRecord(table);\n    grNI.addQuery('u_request_type',vaInputs.needit_type.getValue());\n    gs.info('u_request_type '+vaInputs.needit_type.getValue()+\" table \"+table);\n    grNI.addQuery('active','true');\n   //grNI.addQuery('u_requested_for',vaInputs.user);\n    grNI.orderBy('u_when_needed');\n    grNI.query();\n    while(grNI.next()){\n      options.push({'value': grNI.getUniqueValue(), 'label': grNI.getValue('number')+\n      \"(\"+grNI.getValue('u_when_needed')+\"): \"+grNI.getValue('short_description')});\n    }\n    return options;\n})()\n",
+            "mode": "external_script"
+          },
+          "hasCardHeader": false,
+          "cardMetadata": {
+            "mode": "card",
+            "metadataScript": "",
+            "cardTemplate": "",
+            "cardFields": {},
+            "cardDefinition": {}
+          },
+          "withNluUserInput": false,
+          "skipIfFulfilled": false
+        }
+      },
+      "edges": [
+        {
+          "id": "5bf320f47de3490f9469b31d606a51a0",
+          "edgeType": "Edge",
+          "source": "98c29ed85df0475aa5daceb50452d779",
+          "target": "e4107c2984704b0aba947ec633366ecb",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "03abfdd64f0f49b9877acc8bf154bc21",
+          "edgeType": "Edge",
+          "source": "b3f5d0b5502c49b088cb732aac658404",
+          "target": "78d83ca876314fc189eb6fba451ee3e7",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "bc8b2a7dddf2400fb923b8943177bc90",
+          "edgeType": "Edge",
+          "source": "78d83ca876314fc189eb6fba451ee3e7",
+          "target": "fda937469e514a0c82b4ad8bdfd37d6a",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "4be59c29280549d6b3974cd172b7da5d",
+          "edgeType": "Edge",
+          "source": "fda937469e514a0c82b4ad8bdfd37d6a",
+          "target": "98c29ed85df0475aa5daceb50452d779",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "4b67f6c01ed540ba92a68fdc312b03c2": {
+      "id": "4b67f6c01ed540ba92a68fdc312b03c2",
+      "name": "LiveAgent_application",
+      "value": {
+        "mode": "simple",
+        "value": null
+      },
+      "varType": "script",
+      "category": "vaVars"
+    },
+    "eaec74f0864349f58f95df07c44ab1d8": {
+      "category": "vaInputs",
+      "id": "eaec74f0864349f58f95df07c44ab1d8",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    },
+    "2c2647bf6ee84f669c3d41ba7a001b37": {
+      "id": "2c2647bf6ee84f669c3d41ba7a001b37",
+      "name": "needit_type",
+      "label": "NeedIt Type",
+      "varType": "choice",
+      "choices": [
+        {
+          "label": "Legal",
+          "value": "legal"
+        },
+        {
+          "label": "Facilities",
+          "value": "facilities"
+        },
+        {
+          "label": "Human Resources",
+          "value": "human resources",
+          "checked": true,
+          "meta": {}
+        }
+      ],
+      "category": "vaInputs",
+      "nodeId": "78d83ca876314fc189eb6fba451ee3e7",
+      "isHidden": false
+    },
+    "f14c4f36bbac4c37a6127f782c136f75": {
+      "id": "f14c4f36bbac4c37a6127f782c136f75",
+      "name": "needit_list",
+      "label": "NeedIt List",
+      "varType": "reference",
+      "table": "x_58872_needit_needit",
+      "category": "vaInputs",
+      "nodeId": "98c29ed85df0475aa5daceb50452d779",
+      "isHidden": false
+    }
+  }
+}</graph>
+        <name>_PRVW__fcf6ed17963a3110fc2422879a53ba54</name>
+        <sys_class_name>sys_cb_design_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2023-12-04 10:59:15</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>b0f66597933a311003ebf0aefaba1056</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>FlowTopic</sys_name>
+        <sys_package display_value="NeedIt Virtual Agent Conversations" source="x_742101_needit_vi">d3e8c206933ab11003ebf0aefaba1090</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt Virtual Agent Conversations">d3e8c206933ab11003ebf0aefaba1090</sys_scope>
+        <sys_update_name>sys_cb_design_topic_b0f66597933a311003ebf0aefaba1056</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2023-12-04 10:59:15</sys_updated_on>
+        <type>FlowTopic</type>
+    </sys_cb_design_topic>
+</record_update>
